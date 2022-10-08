@@ -17,7 +17,7 @@
         <!-- Add Product -->
 
         <!-- input course name-->
-        <div  class="mt-4">
+        <!-- <div  class="mt-4">
                 <x-input-label for="name" :value="__('Name')" />
 
                 <x-text-input id="name" class="block mt-2 w-full" type="name" name="name" :value="old('name')" required autofocus />
@@ -28,9 +28,9 @@
                 <x-input-label for="price" :value="__('Price')" />
 
                 <x-text-input id="price" class="block mt-2" type="number" name="price" :value="old('price')" required autofocus />
-            </div>
+            </div> -->
             <div class="col-md-4 pull-right">
-        <input type="button" name="" class="btn btn-primary " onclick="addRow('dataTable')" value="+">
+        <input type="button" name="" class="btn btn-primary " class="ml-3" onclick="addRow('dataTable')" value="+">
         </div>
 
         <TABLE id="dataTable" class="table" >
@@ -38,13 +38,17 @@
            
       <TD class="col-md-2">
         <div class="boddy " >
-             <label class="col-md-4 control-label" for="subject"></label>
+             <label class="col-md-4 control-label" for="service"></label>
              <div class="col-md-4">
-             <select  class="form-control" required="true">
+             <select  class="form-control" class="block mt-2 w-full" required="true">
               @foreach($services as $service)
                   <option value="{{ $service->id}}">{{$service->name}}</option>
               @endforeach
 </select>
+<!-- <label >price : </input> -->
+<input id='price' disabled name='price' value="{{ $service->price}}"/>
+
+
              <!-- <input type="text" name="subjects[]" placeholder="subject" class="subject form-control"> -->
 
 <!--              <a href="#" class="btn btn-danger delete">delete</a>   -->
@@ -64,6 +68,12 @@
               @endforeach
 </select>
 </div> -->
+<div  class="mt-4">
+<input type="button" name="" class="btn btn-primary " class="ml-3" onclick="findsum()" value="=">
+</div>
+Sum : <input disabled type="text" required="true" name="sum" id="sum"/>
+VAT : <input disabled type="text" required="true" name="vat" id="vat"/>
+Total : <input disabled type="text" required="true" name="total" id="total"/>
                 <div  class="mt-4">
                 <x-input-label for="name" :value="__('Notes')" />
           <textarea id="notes" name="Notes" placeholder="notes" class="block mt-2 w-full" required="" type="text" ></textarea>
@@ -115,4 +125,18 @@
       }
     }
 
-</script>
+    
+function findsum(){
+    var arr = document.getElementsByName('price');
+    var tot=0;
+    for(var i=0;i<arr.length;i++){
+        if(parseInt(arr[i].value))
+            tot += parseInt(arr[i].value);
+    }
+    document.getElementById('sum').value = tot;
+    var _vat = tot * 0.05;
+    document.getElementById('vat').value = _vat;
+    document.getElementById('total').value = tot + _vat;
+}
+
+    </script>
