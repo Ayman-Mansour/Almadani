@@ -1,7 +1,7 @@
 
 <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 350 350" width="196px" height="196px" style="enable-background:new 0 0 350 350;" xml:space="preserve">
+	 viewBox="0 0 350 350" width="64px" height="64px" style="enable-background:new 0 0 350 350;" xml:space="preserve">
 <style type="text/css">
 	.st0{opacity:0.3;fill:#22B573;stroke:#009245;stroke-miterlimit:10;}
 	.st1{opacity:0.4;fill:#22B573;stroke:#009245;stroke-miterlimit:10;}
