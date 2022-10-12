@@ -34,19 +34,26 @@
     <table class="table table-bordered ">
         <thead>
             <tr>
-                <th>invoice Name</th>
-                <th>invoice Price</th>
-                <th>Description</th>
+                <th>invoice Total</th>
+                <th>invoice Notes</th>
+                <th>Date</th>
+                <th>invoice Total</th>
+                <th>invoice Notes</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{$invoice->name}}</td>
-                <td>{{$invoice->price}}</td>
-                <td class="col-md-4">{{$invoice->description}}</td>
+                <td>{{$invoice->total}}</td>
+                <td>{{$invoice->notes}}</td>
+                <td class="col-md-4">{{$invoice->created_at}}</td>
+                @foreach($invservs as $invserv)
+                <td>{{App\Models\Service::find($invserv->service_id)->name}}</td>
+                <td>{{App\Models\Service::find($invserv->service_id)->price}}</td>
+                @endforeach
+                <br></br>
                 <td>
-                    <a class="btn btn-small btn-info" href="{{ URL::to('invoices/' . $invoice->id . '/edit') }}">Edit</a>
+                    <a class="btn btn-small btn-info" href="{{ URL::to('invoices/' . $invoice->id . '/print') }}">Edit</a>
                    
                 </td> 
             </tr>

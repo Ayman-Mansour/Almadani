@@ -23,7 +23,7 @@
                         {{ __('Invoices') }}
                     </x-nav-link>
                     
-                    <x-nav-link :href="route('employees')" :active="request()->routeIs('employees')">
+                    <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees')">
                         {{ __('Employees') }}
                     </x-nav-link>
                     

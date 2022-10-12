@@ -13,11 +13,22 @@ use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    } 
     /**
      * Display the registration view.
      *
      * @return \Illuminate\View\View
      */
+    public function index()
+    {
+        $users = User::all();
+        return view('employees.index',compact("users"));
+    }
+
     public function create()
     {
         return view('auth.register');
@@ -39,16 +50,24 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $new_user = new User;
+            $new_user->name = $request->name;
+            $new_user->email = $request->email;
+            $new_user->password = Hash::make($request->password);
+            $new_user->role = $request->role;
+            $new_user->save();
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect("employees");
+    }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+
+        return view('employees.details',compact('user'));
     }
 }

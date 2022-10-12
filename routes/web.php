@@ -39,11 +39,19 @@ Route::get('/reports', function () {
     return view('reports');
 })->middleware(['auth'])->name('reports');
 
-Route::get('/employees', function () {
-    return view('employees');
-})->middleware(['auth'])->name('employees');
+
+Route::resource('/employees','App\Http\Controllers\Auth\RegisteredUserController');
+Route::post('/employees/store','App\Http\Controllers\Auth\RegisteredUserController@store');
+
+// Route::get('/employees', function () {
+//     return view('employees');
+// })->middleware(['auth'])->name('employees');
 
 Route::resource('/invoices','App\Http\Controllers\InvoicesController');
+Route::post('/invoices/store','App\Http\Controllers\invoicesController@store');
+
+// Route::resource('/invoices/print','App\Http\Controllers\invoicesController@print');
+Route::get('/invoices/{id}/print','App\Http\Controllers\invoicesController@print');
 
 
 // Route::get('/invoices', function () {

@@ -16,12 +16,11 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('service_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('service_id')->references('id')->on('services');
             $table->float('claim');
             $table->float('vat');
             $table->float('total');
+            $table->longText('notes');
             $table->timestamps();
             
         });

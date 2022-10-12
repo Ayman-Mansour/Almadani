@@ -8,10 +8,16 @@ use App\Models\Invoice;
 
 use App\Models\Service;
 
+use App\Models\Invserv;
+
 use \Session;
 
 class InvoicesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }  
     /**
      * Display a listing of the resource.
      *
@@ -43,17 +49,41 @@ class InvoicesController extends Controller
      */
     public function store(Request $request)
     {
-      $name = $request->input('name');
-      $description = $request->input('description');
-      $price = $request->input('price');
+      $user_id = $request->input('user_id');
+      $input = $request->all();
+      $services[]=$request->input('services[]');
+      $price=$request->input('price');
+      $claim = $request->input('sum');
+      $vat = $request->input('vat');
+      $total = $request->input('total');
+      $claim = 0;
+    //   dd( $request()->all() );
+    for($i=0; $i < count($input['services']);$i++){
+        $service_id=$input['services'][$i];
 
+        $service_price[$i] = Service::find($service_id)->price;
+        $claim += $service_price[$i];
+    }
+      $vat = $claim * 0.05;
+      $total = $claim + $vat;
       $new_invoice = new Invoice;
-      $new_invoice->name = $request->name;
-      $new_invoice->description = $request->description;
-      $new_invoice->price = $request->price;
+      $new_invoice->user_id = $user_id;
+      $new_invoice->claim = $claim;
+      $new_invoice->vat = $vat;
+      $new_invoice->total = $total;
+      $new_invoice->notes = $request->notes;
       $new_invoice->save();
-        
-        return view('invoices.index');
+      $invoice = Invoice::all()->last();
+      $invoice_id = $invoice->id;
+     for($i=0; $i < count($input['services']);$i++){
+             $service=$input['services'][$i];
+             $new_invserv=new Invserv;
+             $new_invserv->invoice_id=$invoice_id;
+             $new_invserv->service_id=$service;
+             $new_invserv->save();
+            }
+     
+        return redirect('invoices');
     }
 
     /**
@@ -65,7 +95,9 @@ class InvoicesController extends Controller
     public function show($id)
     {
         $invoice = Invoice::find($id);
-        return view('invoices.details',compact('invoice'));
+        $invservs = Invserv::where("invoice_id","=",$id)->get()->all();
+
+        return view('invoices.details',compact('invoice','invservs'));
     }
 
     /**
@@ -116,4 +148,11 @@ class InvoicesController extends Controller
         $invoice = Invoice::find($id)->delete();
         Session::flash('message', 'You successfully deleted invoice');
     }
+
+    public function print($id)
+    {
+        // $invoices = Invoice::all();
+        return view('invoices.invoice-print');
+        // ,compact('invoices'));   
+     }
 }

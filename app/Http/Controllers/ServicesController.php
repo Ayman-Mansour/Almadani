@@ -10,6 +10,10 @@ use \Session;
 
 class ServicesController extends Controller
 {
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }  
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +32,7 @@ class ServicesController extends Controller
      */
     public function create()
     {
-        return view('services.add-invoice');    
+        return view('services.add-service');    
     }
 
     /**
@@ -50,7 +54,9 @@ class ServicesController extends Controller
       $new_service->price = $request->price;
       $new_service->save();
         
-        return view('services.index');
+    
+      $services = Service::all();
+      return view('services.index',compact('service'));
     }
 
     /**

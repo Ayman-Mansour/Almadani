@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Invoices') }}
+            {{ __('Employees') }}
         </h2>
     </x-slot>
 
@@ -13,8 +13,8 @@
             <label class="col-md-5 control-label" for="submit"></label>
             <div class="col-md-5">
               <button id="submit" name="submit" class="btn btn-primary"></button>
-              <x-nav-link :href="route('invoices.create')">
-                        {{ __('add-invoice') }}
+              <x-nav-link :href="route('employees.create')">
+                        {{ __('add-employee') }}
                     </x-nav-link>
             </div>
         </div>
@@ -22,27 +22,16 @@
             </div>
         </div>
     </div>
-    <div class="row">
-		<div class="col-lg-3 col-xs-6">
-			<div class="rad-info-box ">
-    @foreach($invoices as $invoice)
+    @foreach($users as $user)
     <x-service-card>
         <x-slot name="logo">
-            <a href="/invoices/{{ $invoice->id }}">
+            <a href="/employees/{{ $user->id }}">
                 <x-nav-logo class="w-20 h-20 fill-current text-gray-500" />
             </a>
         </x-slot>
-            <div>{{ $invoice->name }}</div>
-            <div>{{ $invoice->total }}</div>
-            <div>{{ $invoice->created_at }}</div>
+            <div>{{ $user->name }}</div>
+            <div>{{ $user->total }}</div>
+            <div>{{ $user->created_at }}</div>
             </x-service-card>
             @endforeach
-        </div>
-        </div>
-    </div>
-            @if (Session::has('message'))
-	<p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
-@endif
-
-
 </x-app-layout>

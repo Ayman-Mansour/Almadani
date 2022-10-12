@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@admin',
-            'password' => '$2y$10$DK1zf/0q.Vj4ZM6qDiCn7.4ku0E6dWqCmclTqew.OcmRHpcw6LFsa'
+            'password' => '$2y$10$DK1zf/0q.Vj4ZM6qDiCn7.4ku0E6dWqCmclTqew.OcmRHpcw6LFsa',
+            'role' => 1,
+            'active' => 1
         ]);
     }
 }
